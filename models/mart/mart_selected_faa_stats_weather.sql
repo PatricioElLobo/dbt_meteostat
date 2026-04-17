@@ -1,5 +1,6 @@
 WITH departures AS (
     SELECT origin AS faa,
+           dest as connection,
            flight_date,
            cancelled,
            diverted,
@@ -9,6 +10,7 @@ WITH departures AS (
 ),
 arrivals AS (
     SELECT dest AS faa,
+           origin as connection,
            flight_date,
            cancelled,
            diverted,
@@ -24,8 +26,8 @@ all_movements AS (
 airport_daily_stats AS (
     SELECT faa,
            flight_date,
-           COUNT(DISTINCT CASE WHEN movement_type = 'departure' THEN faa END) AS unique_departure_connections,
-           COUNT(DISTINCT CASE WHEN movement_type = 'arrival' THEN faa END) AS unique_arrival_connections,
+           COUNT(DISTINCT CASE WHEN movement_type = 'departure' THEN connection END) AS unique_departure_connections,
+           COUNT(DISTINCT CASE WHEN movement_type = 'arrival' THEN connection END) AS unique_arrival_connections,
            COUNT(*) AS total_planned,
            SUM(cancelled) AS total_cancelled,
            SUM(diverted) AS total_diverted,
