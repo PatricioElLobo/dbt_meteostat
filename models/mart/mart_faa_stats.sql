@@ -42,4 +42,4 @@ SELECT s.faa,
        s.total_occurred
 FROM airport_stats s
 LEFT JOIN {{ref('prep_airports')}} a ON s.faa = a.faa
-ORDER BY total_planned DESC;
+ORDER BY total_planned DESC
